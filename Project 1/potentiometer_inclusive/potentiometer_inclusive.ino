@@ -4,7 +4,7 @@ const int ledPin3 =  13;      // the number of the third LED pin
 const int ledPin2 =  12;      // the number of the second LED pin
 const int ledPin1 =  11;      // the number of the first LED pin
 const int potentPin = 0;      // The number of the potentiometer pin
-const unsigned long buttonInterval = 10;          // interval at which to check to see if the button is pressed
+const unsigned long buttonInterval = 100;          // interval at which to check to see if the button is pressed
 
 // Declaring Variables;
 bool ledState1;             // ledState used to set the LED
@@ -59,8 +59,16 @@ void loop() {
   // Get the current potentiometer value
   potentValue = analogRead(potentPin);
 
-  //Set the light interval at which it will blink.
-  lightInterval = 100 + potentValue;
+  //Set the light interval at which it will blink. The minimum amount is 200 milliseconds between blinks and the maximum is 1100 milliseconds, or 1.1 seconds.
+  if (potentValue < 100){
+    lightInterval = 100 + 100;
+  }
+  else if (potentValue > 1000){
+    lightInterval = 100 + 1000;
+  }
+  else {
+    lightInterval = 100 + potentValue;
+  }
   
   // Read the button state
   buttonState = digitalRead(buttonPin);
