@@ -1,11 +1,12 @@
-// constants won't change. Used here to set a pin number :
+// Setting constants:
 const int buttonPin = 3;     // the number of the pushbutton pin
-const int ledPin3 =  13;      // the number of the LED pin
-const int ledPin2 =  12;      // the number of the LED pin
-const int ledPin1 =  11;      // the number of the LED pin
-const int potentPin = 0;
+const int ledPin3 =  13;      // the number of the third LED pin
+const int ledPin2 =  12;      // the number of the second LED pin
+const int ledPin1 =  11;      // the number of the first LED pin
+const int potentPin = 0;      // The number of the potentiometer pin
+const unsigned long buttonInterval = 10;          // interval at which to check to see if the button is pressed
 
-// Variables will change :
+// Declaring Variables;
 bool ledState1;             // ledState used to set the LED
 bool ledState2;             // ledState used to set the LED
 bool ledState3;             // ledState used to set the LED
@@ -15,20 +16,12 @@ int buttonSetting;          // Saves what setting the button is on for our difff
 int lastButtonSetting;      // Saves the last button setting.
 int tick;                   // Saves what tick the button is on (to differentiate the different lights for each setting)
 int potentValue;            // Saves the current potentiometer value
-int lightInterval;
-
-// Generally, you should use "unsigned long" for variables that hold time
-// The value will quickly become too large for an int to store
+int lightInterval;          // Saves the current light interval between blinks.
 unsigned long previousMillisLight;        // will store last time LED was updated
 unsigned long previousMillisButton;       // store last time the button was checked to see if it was being pressed
 
-// constants won't change :
-const unsigned long buttonInterval = 10;          // interval at which to check to see if the button is pressed
-const int minBlinkFrequency = 100;
-const int maxBlinkFrequency = 1000;
-
 void setup() {
- // initialize the LED pin as an output:
+ // initialize the LED pis as outputs:
   pinMode(ledPin1, OUTPUT);
   pinMode(ledPin2, OUTPUT);
   pinMode(ledPin3, OUTPUT);
@@ -40,7 +33,7 @@ void setup() {
   // Initialize the potentiometerPin as an input
   pinMode(potentPin, INPUT);
 
-  // Set variables' startings states
+  // Set variables' startings values
   ledState1 = HIGH;             
   ledState2 = LOW;            
   ledState3 = HIGH;           
@@ -57,7 +50,9 @@ void setup() {
 }
 
 void loop() {
+  // Allow interrupts
   interrupts();
+  
   // Get the current time in milliseconds.
   unsigned long currentMillis = millis();
 
@@ -75,6 +70,7 @@ void loop() {
     
     // save the last time you blinked the LED
     previousMillisLight = currentMillis;
+    
     // Increment the tick you're on every loop
     tick += 1;
 
@@ -117,7 +113,6 @@ void loop() {
         ledState2 = LOW;
         ledState3 = HIGH;
       }
-      
     }
 
     //Set the fourth button state (hopscotch)
@@ -148,7 +143,7 @@ void loop() {
   }
   
   //Delay so the Arduino doesn't run at max speed all the time.
-  delay(50);
+  delay(10);
 }
 
 
